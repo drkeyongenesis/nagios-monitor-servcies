@@ -1,0 +1,44 @@
+version: '3'
+services:
+  nagios:
+    image: jasonrivers/nagios:latest
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nagios/config:/opt/nagios/etc
+      - ./nagios/plugins:/opt/nagios/libexec
+    environment:
+      - NAGIOSADMIN_USER=nagiosadmin
+      - NAGIOSADMIN_PASS=nagiosadmin
+    networks:
+      - monitoring_network
+    restart: always
+
+  mysql:
+    image: mysql:8.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootpass
+      - MYSQL_DATABASE=testdb
+      - MYSQL_USER=testuser
+      - MYSQL_PASSWORD=testpass
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+    ports:
+      - "3307:3306"
+    networks:
+      - monitoring_network
+    restart: always
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8081:80"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    networks:
+      - monitoring_network
+    restart: always
+
+networks:
+  monitoring_network:
+    driver: bridge
