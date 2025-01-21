@@ -1,3 +1,4 @@
+
 # Monitoring services with Nagios in Docker 
 This project implements a monitoring system with Nagios, using Docker to manage containers for services such as MySQL and NGINX. It allows monitoring the status and availability of these services in real time.
 
@@ -86,11 +87,8 @@ We'll use Docker Compose to set up our Nagios environment. This ensures consiste
 1. Create a new directory for your Nagios lab:
 
 ```bash
-
 mkdir nagios-lab
-
 cd nagios-lab
-
 ```
 
  
@@ -98,47 +96,26 @@ cd nagios-lab
 2. Create a `docker-compose.yml` file:
 
 ```yaml
-
 version: '3'
-
 services:
-
   nagios:
-
     image: jasonrivers/nagios:latest
-
     ports:
-
       - "8080:80"
-
     volumes:
-
       - ./nagios/etc:/opt/nagios/etc
-
       - ./nagios/var:/opt/nagios/var
-
       - ./custom-plugins:/opt/Custom-Nagios-Plugins
-
     environment:
-
       - NAGIOSADMIN_PASSWORD=nagiosadmin
 
- 
-
   target-host:
-
     image: ubuntu:latest
-
     command: tail -f /dev/null
 
- 
-
 networks:
-
   default:
-
     driver: bridge
-
 ```
 
  
@@ -146,9 +123,7 @@ networks:
 3. Create necessary directories:
 
 ```bash
-
 mkdir -p nagios/etc nagios/var custom-plugins
-
 ```
 
  
@@ -156,109 +131,66 @@ mkdir -p nagios/etc nagios/var custom-plugins
 4. Start the environment:
 
 ```bash
-
 docker-compose up -d
-
 ```
-
- 
 
 5. Access Nagios web interface:
 
 - URL: http://localhost:8080/nagios
-
 - Username: nagiosadmin
-
 - Password: nagiosadmin
 
  
 
 ## 3. Basic Nagios Configuration
 
- 
-
 ### Understanding Configuration Files
-
- 
-
 Key configuration files in Nagios:
 
 ```
 
 /opt/nagios/etc/
-
 ├── nagios.cfg           # Main configuration file
-
 ├── cgi.cfg             # CGI configuration
-
 ├── objects/
-
     ├── commands.cfg    # Command definitions
-
     ├── contacts.cfg    # Contact definitions
-
     ├── timeperiods.cfg # Time period definitions
-
     ├── templates.cfg   # Template definitions
-
     └── localhost.cfg   # Host definitions
-
 ```
 
- 
-
 ### Basic Host Monitoring Configuration
-
- 
 
 1. Create a new host configuration file:
 
 ```bash
-
 docker exec -it nagios-lab_nagios_1 bash
-
 cd /opt/nagios/etc/objects/
-
+apt-get update
+apt-get install vim
 ```
-
- 
 
 2. Add a new host configuration (`target-host.cfg`):
 
 ```ini
 
 define host {
-
     use                     linux-server
-
     host_name               target-host
-
     alias                   Target Host
-
     address                 target-host
-
     max_check_attempts      5
-
     check_period           24x7
-
     notification_interval   30
-
     notification_period    24x7
-
 }
 
- 
-
 define service {
-
     use                     generic-service
-
     host_name               target-host
-
     service_description     PING
-
     check_command          check_ping!100.0,20%!500.0,60%
-
 }
 
 ```
@@ -268,16 +200,11 @@ define service {
 3. Verify and reload configuration:
 
 ```bash
-
 /opt/nagios/bin/nagios -v /opt/nagios/etc/nagios.cfg
-
 ```
 
- 
 
 ## 4. Infrastructure Monitoring
-
- 
 
 ### Setting Up Basic Service Checks
 
@@ -290,15 +217,10 @@ define service {
 define service {
 
     use                     generic-service
-
     host_name               target-host
-
     service_description     HTTP
-
     check_command          check_http
-
     check_interval         5
-
 }
 
 ```
@@ -308,17 +230,12 @@ define service {
 2. System Resource Monitoring:
 
 ```ini
-
 define service {
 
     use                     generic-service
-
     host_name               target-host
-
     service_description     CPU Load
-
     check_command          check_nrpe!check_load
-
 }
 
 ```
@@ -332,9 +249,7 @@ define service {
 1. Enter the target container:
 
 ```bash
-
 docker exec -it nagios-lab_target-host_1 bash
-
 ```
 
  
@@ -342,11 +257,8 @@ docker exec -it nagios-lab_target-host_1 bash
 2. Install NRPE:
 
 ```bash
-
 apt-get update
-
 apt-get install -y nagios-nrpe-server nagios-plugins
-
 ```
 
  
@@ -362,29 +274,14 @@ apt-get install -y nagios-nrpe-server nagios-plugins
 Basic management commands:
 
 ```bash
-
 # Start Nagios
-
 systemctl start nagios
-
- 
-
 # Stop Nagios
-
 systemctl stop nagios
-
- 
-
 # Restart Nagios
-
 systemctl restart nagios
-
- 
-
 # Check Status
-
 systemctl status nagios
-
 ```
 
  
@@ -392,9 +289,7 @@ systemctl status nagios
 ### Checking Configuration
 
 ```bash
-
 /opt/nagios/bin/nagios -v /opt/nagios/etc/nagios.cfg
-
 ```
 
  
@@ -414,25 +309,15 @@ systemctl status nagios
 define contact {
 
     contact_name            nagiosadmin
-
     use                     generic-contact
-
     alias                   Nagios Admin
-
-    email                   admin@example.com
-
+    email                   keyon_genesis_kanan@gmail.com
     service_notification_period     24x7
-
     host_notification_period        24x7
-
     service_notification_options    w,u,c,r
-
     host_notification_options       d,u,r
-
     service_notification_commands   notify-service-by-email
-
     host_notification_commands      notify-host-by-email
-
 }
 
 ```
@@ -442,13 +327,9 @@ define contact {
 2. Configure email command in `commands.cfg`:
 
 ```ini
-
 define command {
-
     command_name    notify-service-by-email
-
     command_line    /usr/bin/printf "%b" "Service: $SERVICEDESC$\nHost: $HOSTNAME$\nState: $SERVICESTATE$\n\nDate/Time: $LONGDATETIME$\n\nAdditional Info:\n\n$SERVICEOUTPUT$" | /usr/bin/mail -s "** $NOTIFICATIONTYPE$ Service Alert: $HOSTNAME$/$SERVICEDESC$ is $SERVICESTATE$ **" $CONTACTEMAIL$
-
 }
 
 ```
@@ -516,19 +397,12 @@ Example time period configuration in `timeperiods.cfg`:
 define timeperiod {
 
     timeperiod_name workhours
-
     alias           Normal Work Hours
-
     monday          09:00-17:00
-
     tuesday         09:00-17:00
-
     wednesday       09:00-17:00
-
     thursday        09:00-17:00
-
     friday          09:00-17:00
-
 }
 
 ```
