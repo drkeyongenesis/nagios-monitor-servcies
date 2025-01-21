@@ -464,79 +464,20 @@ define service {
 ```
 
  
-
-## Practical Exercises
-
- 
-
-### Exercise 1: Basic Monitoring Setup
-
-1. Set up Nagios using the provided Docker Compose file
-
-2. Configure monitoring for a new host
-
-3. Add basic service checks (PING, HTTP)
-
-4. Verify the configuration
-
-5. Access the web interface and observe the monitoring status
-
- 
-
-### Exercise 2: Notifications
-
-1. Configure email notifications
-
-2. Set up a contact group
-
-3. Test notifications by simulating a service failure
-
- 
-
-### Exercise 3: Event Handlers
-
-1. Create a custom event handler script
-
-2. Configure it for a service
-
-3. Test the event handler by simulating a service failure
-
- 
-
-### Exercise 4: Backup and Restore
-
-1. Create a backup of your Nagios configuration
-
-2. Modify some configurations
-
-3. Restore from backup
-
-4. Verify the restored configuration
-
  
 
 ## Troubleshooting Guide
 
- 
-
-Common issues and solutions:
-
- 
+Common issues and solutions
 
 1. Web Interface Not Accessible
 
 ```bash
-
 # Check Apache status
-
 docker exec nagios-lab_nagios_1 service apache2 status
-
  
-
 # Check Nagios logs
-
 docker exec nagios-lab_nagios_1 tail -f /opt/nagios/var/nagios.log
-
 ```
 
  
@@ -544,11 +485,8 @@ docker exec nagios-lab_nagios_1 tail -f /opt/nagios/var/nagios.log
 2. Configuration Verification Fails
 
 ```bash
-
 # Check syntax
-
 docker exec nagios-lab_nagios_1 /opt/nagios/bin/nagios -v /opt/nagios/etc/nagios.cfg
-
 ```
 
  
@@ -556,21 +494,15 @@ docker exec nagios-lab_nagios_1 /opt/nagios/bin/nagios -v /opt/nagios/etc/nagios
 3. Service Checks Not Working
 
 ```bash
-
 # Test NRPE
-
 docker exec nagios-lab_nagios_1 /opt/nagios/libexec/check_nrpe -H target-host
-
 ```
 
  
 
 ## References
-
 - Nagios Core Documentation: https://www.nagios.org/documentation/
-
 - Nagios Plugins Documentation: https://www.nagios.org/downloads/nagios-plugins/
-
 - NRPE Documentation: https://github.com/NagiosEnterprises/nrpe
 
  
