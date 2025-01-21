@@ -105,7 +105,7 @@ services:
     volumes:
       - ./nagios/etc:/opt/nagios/etc
       - ./nagios/var:/opt/nagios/var
-      - ./custom-plugins:/opt/Custom-Nagios-Plugins
+      - ./custom-plugins:/opt/custom-nagios-plugins
     environment:
       - NAGIOSADMIN_PASSWORD=nagiosadmin
 
