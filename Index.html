@@ -3,43 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSS Pseudo-class and Pseudo-element Example</title>
+    <title>CSS Box Sizing and Table Styling</title>
     <style>
-        /* ======================== Pseudo-class for Hover ======================== */
-        /* Change the color of all links when they are hovered over */
-        a:hover {
-            color: darkorange; /* Change the color of links to dark orange on hover */
-            text-decoration: none; /* Remove the underline on hover */
+        /* ======================== Box-Sizing and Styling for Divs ======================== */
+        div {
+            box-sizing: border-box; /* Ensures padding and border are included in the element's total width and height */
+            border: 2px solid #3498db; /* Adds a blue border */
+            padding: 20px; /* Adds padding inside the div */
+            margin: 15px; /* Adds margin outside the div */
         }
 
-        /* ======================== Pseudo-element for First Letter ======================== */
-        /* Add a double underline to the first letter of every paragraph */
-        p::first-letter {
-            font-size: 2em;
-            font-weight: bold;
-            color: darkorange; /* Same color as hover for consistency */
-            text-decoration: underline double darkorange;
-            padding-right: 5px; /* Add a little space after the underline */
+        /* Experimenting with different values for div */
+        .container {
+            border: 5px solid #e74c3c; /* Red border for the container */
+            padding: 30px;
+            margin: 25px;
         }
 
-        /* ======================== Exclude First Letter of Specific Paragraph ======================== */
-        /* The class 'no-underline' prevents the first letter of this specific paragraph from being affected by the pseudo-element */
-        p.no-underline::first-letter {
-            text-decoration: none;
+        /* ======================== Table Styling ======================== */
+        table {
+            width: 100%; /* Table takes up 100% of the container's width */
+            box-sizing: border-box; /* Ensures padding and border are included in table's total width */
+            margin-top: 20px; /* Adds space above the table */
+            margin-bottom: 20px; /* Adds space below the table */
+            border-collapse: collapse; /* Collapses borders so they don't duplicate */
+        }
+
+        /* ======================== Table Cell Styling ======================== */
+        td {
+            border: 1px solid #2ecc71; /* Adds a 1px solid green border around table cells */
+            padding: 10px; /* Adds 10px padding inside the cells */
+            text-align: left; /* Aligns text to the left within each cell */
+        }
+
+        /* ======================== Table Header Styling ======================== */
+        th {
+            background-color: #f39c12; /* Sets a yellow-orange background color for table headers */
+            text-transform: uppercase; /* Makes all text in the header uppercase */
+            padding: 10px; /* Adds padding to header cells */
         }
 
     </style>
 </head>
 <body>
 
-    <h1>CSS Pseudo-classes and Pseudo-elements Example</h1>
+    <h1>CSS Box-Sizing, Table, and Cell Styling</h1>
 
-    <!-- Link to demonstrate hover effect -->
-    <a href="#">Hover over this link</a>
+    <!-- Div container -->
+    <div>
+        <p>This is a regular div element. It has padding, a border, and margin applied.</p>
+    </div>
 
-    <p>This is a paragraph. The first letter will have a double underline when hovered over.</p>
-    <p class="no-underline">Modules undertaken at RP. This first letter won’t have the double underline effect.</p>
-    <p>Another example paragraph where the first letter will be styled with a decorative double underline.</p>
+    <!-- Another div container with different styles -->
+    <div class="container">
+        <p>This is another div container with more padding, margin, and a different border color.</p>
+    </div>
+
+    <!-- Table example -->
+    <table>
+        <thead>
+            <tr>
+                <th>Header 1</th>
+                <th>Header 2</th>
+                <th>Header 3</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Data 1</td>
+                <td>Data 2</td>
+                <td>Data 3</td>
+            </tr>
+            <tr>
+                <td>Data 4</td>
+                <td>Data 5</td>
+                <td>Data 6</td>
+            </tr>
+        </tbody>
+    </table>
 
 </body>
 </html>
