@@ -3,68 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSS Selectors Example</title>
+    <title>CSS Pseudo-class and Pseudo-element Example</title>
     <style>
-        /* ======================== Attribute Selector ======================== */
-        /* Selects all <a> elements whose href contains "example" and changes their color to blue */
-        a[href*="example"] {
-            color: red;
-            text-decoration: underline; /* Removes underline */
+        /* ======================== Pseudo-class for Hover ======================== */
+        /* Change the color of all links when they are hovered over */
+        a:hover {
+            color: darkorange; /* Change the color of links to dark orange on hover */
+            text-decoration: none; /* Remove the underline on hover */
         }
 
-        /* ======================== Dependent Selector ======================== */
-        /* Selects all <p> elements inside a <section> tag and gives them a border */
-        section p {
-            border: 1px solid gray;
-            
+        /* ======================== Pseudo-element for First Letter ======================== */
+        /* Add a double underline to the first letter of every paragraph */
+        p::first-letter {
+            font-size: 2em;
+            font-weight: bold;
+            color: darkorange; /* Same color as hover for consistency */
+            text-decoration: underline double darkorange;
+            padding-right: 5px; /* Add a little space after the underline */
         }
 
-        /* ======================== Child Selector ======================== */
-        /* Selects only direct <li> children of <ul> (not nested <li> inside another <li>) */
-        ul > li {
-            font-size: 18px;
-            color: darkgreen;
-        }
-
-        /* ======================== Hover Selector ======================== */
-        /* Changes the color of list items when the user hovers over them */
-        ul > li:hover {
-            color: red;
-            cursor: pointer; /* Makes the cursor a pointer on hover */
+        /* ======================== Exclude First Letter of Specific Paragraph ======================== */
+        /* The class 'no-underline' prevents the first letter of this specific paragraph from being affected by the pseudo-element */
+        p.no-underline::first-letter {
+            text-decoration: none;
         }
 
     </style>
 </head>
 <body>
 
-    <h1>CSS Selectors Example</h1>
+    <h1>CSS Pseudo-classes and Pseudo-elements Example</h1>
 
-    <p>This is a simple page to demonstrate CSS selectors.</p>
+    <!-- Link to demonstrate hover effect -->
+    <a href="#">Hover over this link</a>
 
-    <!-- A link with the href attribute containing "example" -->
-    <a href="https://www.example.com">Go to Example Website</a>
-
-    <!-- Another link with href containing "example" -->
-    <a href="https://www.another-test.com">Another test Link</a>
-
-    <!-- Section with paragraphs -->
-    <section>
-        <p>This is the first paragraph inside a section.</p>
-        <p>This is the second paragraph inside the section.</p>
-    </section>
-
-    <!-- Unordered list with list items -->
-    <ul>
-        <li>First item in the list</li>
-        <li>Second item in the list</li>
-        <li>Third item in the list</li>
-        <!-- Nested list item (this won't be affected by the child selector) -->
-        <li>
-            <ul>
-                <li>Nested item (not direct child)</li>
-            </ul>
-        </li>
-    </ul>
+    <p>This is a paragraph. The first letter will have a double underline when hovered over.</p>
+    <p class="no-underline">Modules undertaken at RP. This first letter won’t have the double underline effect.</p>
+    <p>Another example paragraph where the first letter will be styled with a decorative double underline.</p>
 
 </body>
 </html>
