@@ -106,18 +106,42 @@ services:
     ports:
       - "8080:80"
     volumes:
-      - ./nagios/etc:/opt/nagios/etc
-      - ./nagios/var:/opt/nagios/var
-      - ./custom-plugins:/opt/custom-nagios-plugins
+      - ./nagios/config:/opt/nagios/etc
+      - ./nagios/plugins:/opt/nagios/libexec
     environment:
-      - NAGIOSADMIN_PASSWORD=nagiosadmin
+      - NAGIOSADMIN_USER=nagiosadmin
+      - NAGIOSADMIN_PASS=nagios123
+    networks:
+      - monitoring_network
+    restart: always
 
-  target-host:
-    image: ubuntu:latest
-    command: tail -f /dev/null
+  mysql:
+    image: mysql:8.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootpass
+      - MYSQL_DATABASE=testdb
+      - MYSQL_USER=testuser
+      - MYSQL_PASSWORD=testpass
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+    ports:
+      - "3307:3306"
+    networks:
+      - monitoring_network
+    restart: always
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8081:80"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    networks:
+      - monitoring_network
+    restart: always
 
 networks:
-  default:
+  monitoring_network:
     driver: bridge
 ```
 
