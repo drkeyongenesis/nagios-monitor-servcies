@@ -144,15 +144,6 @@ networks:
   monitoring_network:
     driver: bridge
 ```
-
- 
-
-3. Create necessary directories:
-
-```bash
-mkdir -p nagios/etc nagios/var custom-plugins
-```
-
  
 
 4. Start the environment:
@@ -163,9 +154,9 @@ docker-compose up -d
 
 5. Access Nagios web interface:
 
-- URL: http://localhost:8080/nagios
+- Click on the codespace (ports and open the browser link) 
 - Username: nagiosadmin
-- Password: nagiosadmin
+- Password: nagios123
 
  
 
