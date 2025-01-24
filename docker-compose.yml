@@ -39,10 +39,6 @@ services:
       - monitoring_network
     restart: always
 
- target-host:
-    image: ubuntu:latest
-    command: tail -f /dev/null
-
 networks:
-  default:
+  monitoring_network:
     driver: bridge
