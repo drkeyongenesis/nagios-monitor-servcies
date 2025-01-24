@@ -81,14 +81,17 @@ We'll use Docker Compose to set up our Nagios environment. This ensures consiste
  
 
 ### Setup Steps
-
- 
-
-1. Create a new directory for your Nagios lab:
+0. Create a codespaces on Github / ensure it's path is nagios-monitor-services
 
 ```bash
-mkdir nagios-lab
-cd nagios-lab
+pwd
+```
+    
+
+2. Create a new directory for your MySQL data:
+
+```bash
+mkdir -p data/mysql
 ```
 
  
